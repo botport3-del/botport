@@ -1,6 +1,8 @@
 import { SiteHeader } from '@/components/site-header';
 import { SiteFooter } from '@/components/site-footer';
 
+export const metadata = { title: 'Features' };
+
 const groups = [
   {
     title: 'Backup & recovery',
@@ -36,7 +38,8 @@ export default function FeaturesPage() {
     <>
       <SiteHeader />
       <main className="container-page py-16">
-        <h1 className="text-4xl font-bold">Features</h1>
+        <div className="eyebrow">Features</div>
+        <h1 className="mt-2.5 text-4xl font-bold">Everything to protect and recover a server</h1>
         <p className="mt-3 max-w-2xl text-slate-400">
           Everything you need to protect and recover your Discord community — without harvesting
           your members&apos; data.

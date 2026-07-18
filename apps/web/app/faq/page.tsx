@@ -1,6 +1,8 @@
 import { SiteHeader } from '@/components/site-header';
 import { SiteFooter } from '@/components/site-footer';
 
+export const metadata = { title: 'FAQ' };
+
 const faqs = [
   [
     'Does Botport steal or "pull" members into other servers?',
