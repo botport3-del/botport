@@ -1,76 +1,45 @@
 import Link from 'next/link';
 import { SiteHeader } from '@/components/site-header';
 import { SiteFooter } from '@/components/site-footer';
+import { ArchiveIcon, ShieldIcon, GateIcon, TeamIcon, CheckIcon } from '@/components/icons';
 
-const stats = [
-  ['1-click', 'server recovery'],
-  ['Hourly', 'automatic backups'],
-  ['0', 'IPs or emails collected'],
-  ['24/7', 'raid protection'],
-];
-
-const featureRows = [
+const features = [
   {
-    eyebrow: 'Backup & recovery',
-    title: 'Never lose your server again',
-    body: 'Botport takes automatic snapshots of your roles, channels, categories, permissions and settings. If your server gets nuked, raided or deleted, rebuild the entire structure in one click.',
-    points: [
-      'Hourly or daily automatic backups',
-      'One-click restore of roles & channels',
-      'Additive restore — never wipes your live server',
-    ],
-    icon: '🗄️',
+    Icon: ArchiveIcon,
+    title: 'Automatic backups',
+    body: 'Hourly or daily snapshots of roles, channels, categories, permissions and server settings — stored and ready to restore.',
   },
   {
-    eyebrow: 'Verification',
-    title: 'Stop raiders, respect members',
-    body: 'Gate new members behind a fast Cloudflare Turnstile CAPTCHA and an optional consent-based identity check. Unlike other tools, Botport never secretly logs IPs, emails or device data.',
-    points: [
-      'Branded verify page with CAPTCHA',
-      'Auto-assign roles on success',
-      'Transparent — members see exactly what is stored',
-    ],
-    icon: '🛡️',
-    reverse: true,
+    Icon: ShieldIcon,
+    title: 'One-click recovery',
+    body: 'Rebuild the whole structure after a nuke or deletion. Restore is additive, so it never wipes your live server.',
   },
   {
-    eyebrow: 'Anti-raid & team',
-    title: 'Control who gets in — and who helps you',
-    body: 'Require a minimum account age, blacklist bad actors, and get raid alerts. Invite staff with scoped, role-based permissions and a full audit log of every action.',
-    points: [
-      'Minimum account age & blacklist',
-      'Join-rate raid detection',
-      'Role-based team access + audit log',
-    ],
-    icon: '🚧',
+    Icon: GateIcon,
+    title: 'Verification & anti-raid',
+    body: 'A CAPTCHA gate, minimum account age and a blacklist keep raiders and alt accounts out. Members see exactly what is stored.',
+  },
+  {
+    Icon: TeamIcon,
+    title: 'Team & audit log',
+    body: 'Invite staff with scoped, role-based permissions. Every privileged action is recorded in an audit log.',
   },
 ];
 
-const steps = [
-  ['1', 'Invite the bot', 'Add Botport to a server you manage and confirm its permissions.'],
-  ['2', 'Configure', 'Turn on verification, pick a verified role, and set your backup schedule.'],
-  ['3', 'Relax', 'Backups run automatically and members verify themselves. Restore anytime.'],
+const compareRows: [string, string, string, boolean][] = [
+  ['Backs up your server structure', 'Yes', 'Yes', true],
+  ['Stores member IP / email / device', 'Never', 'Often', false],
+  ['Stores OAuth tokens to add members elsewhere', 'Never', 'Yes', false],
+  ['Shows members what is collected', 'Always', 'Rarely', true],
+  ["Complies with Discord's Terms of Service", 'Yes', 'No', true],
 ];
 
-const testimonials = [
-  {
-    quote:
-      'A raid wiped half our channels overnight. One click and everything was back in minutes. Absolute lifesaver.',
-    name: 'Aria',
-    role: 'Owner · 48,000 members',
-  },
-  {
-    quote:
-      'Finally a protection bot that does not harvest my members data. The verification page is clean and fast.',
-    name: 'Kenji',
-    role: 'Admin · 22,500 members',
-  },
-  {
-    quote:
-      'Set the backup schedule once and forgot about it. The dashboard makes staff permissions trivial.',
-    name: 'Mara',
-    role: 'Community manager · 15,000 members',
-  },
+const commands: [string, string][] = [
+  ['/backup', 'Take a snapshot of the server now.'],
+  ['/restore', 'Rebuild the server from its most recent backup.'],
+  ['/verify-embed', 'Post the verification message with a Verify button.'],
+  ['/blacklist add · remove', 'Block or unblock a user from verifying.'],
+  ['/info', "Show a member's verification status and account age."],
 ];
 
 const tiers = [
@@ -78,10 +47,14 @@ const tiers = [
   {
     name: 'Premium',
     price: '$4.97',
-    features: ['5 servers', 'Hourly backups', 'Auto roles'],
+    features: ['5 servers', 'Hourly backups', 'Auto roles & blacklist'],
     highlight: true,
   },
-  { name: 'Plus', price: '$9.97', features: ['Unlimited servers', 'Full team RBAC', 'Audit log'] },
+  {
+    name: 'Plus',
+    price: '$9.97',
+    features: ['Unlimited servers', 'Team roles & audit log', 'Priority support'],
+  },
 ];
 
 export default function HomePage() {
@@ -90,159 +63,225 @@ export default function HomePage() {
       <SiteHeader />
       <main>
         {/* Hero */}
-        <section className="relative overflow-hidden">
-          <div className="pointer-events-none absolute left-1/2 top-[-10rem] h-[28rem] w-[48rem] -translate-x-1/2 rounded-full bg-brand/20 blur-3xl" />
-          <div className="container-page relative pt-20 pb-16 text-center sm:pt-28">
-            <span className="inline-flex items-center gap-2 rounded-full border border-surface-border bg-surface-raised px-4 py-1.5 text-xs text-slate-300">
-              <span className="h-2 w-2 rounded-full bg-emerald-400" />
-              Backup · Recover · Verify — without harvesting member data
-            </span>
-            <h1 className="mx-auto mt-6 max-w-4xl text-5xl font-bold leading-[1.05] tracking-tight sm:text-7xl">
-              <span className="gradient-text">Protect your Discord</span>
-              <br />
-              server before disaster strikes
+        <section className="container-page grid items-center gap-12 py-16 sm:py-20 lg:grid-cols-2">
+          <div>
+            <div className="eyebrow">Discord backup &amp; verification</div>
+            <h1 className="mt-4 max-w-[14ch] text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl">
+              Rebuild your server in <span className="text-brand">one click</span> after a raid.
             </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-lg text-slate-300">
-              Botport keeps automatic backups of your server, screens new members with transparent
-              verification, and lets you rebuild everything in one click after a raid.
+            <p className="mt-5 max-w-md text-lg text-slate-400">
+              Botport keeps automatic backups of your roles, channels and settings, and screens new
+              members with a CAPTCHA gate — without logging their IPs, emails or storing OAuth
+              tokens.
             </p>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-              <Link href="/login" className="btn-primary px-6 py-3 text-base">
-                Get started free
+            <div className="mt-7 flex flex-wrap gap-3">
+              <Link href="/login" className="btn-primary px-5 py-2.5">
+                Add to Discord
               </Link>
-              <Link href="/features" className="btn-ghost px-6 py-3 text-base">
-                See all features
+              <Link href="#features" className="btn-ghost px-5 py-2.5">
+                How it works
               </Link>
             </div>
+            <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm text-slate-500">
+              <span>
+                <span className="font-semibold text-emerald-400">✓</span> No OAuth token storage
+              </span>
+              <span>
+                <span className="font-semibold text-emerald-400">✓</span> No IP or email logging
+              </span>
+              <span>
+                <span className="font-semibold text-emerald-400">✓</span> Restores your own server
+              </span>
+            </div>
+          </div>
 
-            <div className="mx-auto mt-16 grid max-w-3xl grid-cols-2 gap-6 sm:grid-cols-4">
-              {stats.map(([value, label]) => (
-                <div key={label} className="text-center">
-                  <div className="text-2xl font-bold text-white sm:text-3xl">{value}</div>
-                  <div className="mt-1 text-xs text-slate-400">{label}</div>
+          {/* Product mock */}
+          <div className="overflow-hidden rounded-2xl border border-surface-border bg-surface-raised shadow-2xl">
+            <div className="flex items-center gap-2 border-b border-surface-border bg-black/20 px-4 py-3">
+              <span className="h-2.5 w-2.5 rounded-full bg-surface-border" />
+              <span className="h-2.5 w-2.5 rounded-full bg-surface-border" />
+              <span className="h-2.5 w-2.5 rounded-full bg-surface-border" />
+              <span className="ml-2 font-mono text-xs text-slate-500">botport · restore</span>
+            </div>
+            <div className="p-4">
+              <div className="mb-3 flex items-center justify-between">
+                <span className="text-sm font-semibold">Demo Community</span>
+                <span className="rounded-full bg-emerald-500/15 px-2.5 py-1 text-xs font-semibold text-emerald-400">
+                  Restored
+                </span>
+              </div>
+              {[
+                ['#', 'general', 'channel'],
+                ['#', 'announcements', 'channel'],
+                ['◈', 'Member', 'role'],
+                ['◈', 'Moderator', 'role'],
+              ].map(([sym, name, kind]) => (
+                <div
+                  key={name}
+                  className="mt-2 flex items-center gap-2.5 rounded-lg border border-surface-border bg-surface px-2.5 py-2 text-sm"
+                >
+                  <span className="text-slate-500">{sym}</span>
+                  <span className="flex-1">{name}</span>
+                  <span className="text-xs font-medium text-emerald-400">✓ {kind}</span>
+                </div>
+              ))}
+              <div className="mt-3.5 flex justify-between text-xs text-slate-500">
+                <span className="font-mono">42 roles · 68 channels</span>
+                <span>restored in 3.1s</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Features */}
+        <section id="features" className="border-t border-surface-border">
+          <div className="section">
+            <div className="eyebrow">Features</div>
+            <h2 className="mt-2.5 max-w-2xl text-3xl font-bold sm:text-4xl">
+              Everything to protect and recover a server
+            </h2>
+            <p className="mt-3 max-w-2xl text-slate-400">
+              Four things a community needs when a raid hits — and nothing that quietly collects your
+              members&apos; data.
+            </p>
+            <div className="mt-10 grid gap-5 sm:grid-cols-2">
+              {features.map(({ Icon, title, body }) => (
+                <div key={title} className="card">
+                  <div className="grid h-10 w-10 place-items-center rounded-lg border border-surface-border bg-brand/10 text-brand">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <h3 className="mt-4 text-lg font-semibold">{title}</h3>
+                  <p className="mt-2 text-sm text-slate-400">{body}</p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Feature rows */}
-        <section className="section space-y-20">
-          {featureRows.map((f) => (
-            <div
-              key={f.title}
-              className={`grid items-center gap-10 lg:grid-cols-2 ${f.reverse ? 'lg:[&>*:first-child]:order-2' : ''}`}
-            >
-              <div>
-                <div className="eyebrow">{f.eyebrow}</div>
-                <h2 className="mt-3 text-3xl font-bold sm:text-4xl">{f.title}</h2>
-                <p className="mt-4 text-slate-300">{f.body}</p>
-                <ul className="mt-6 space-y-3">
-                  {f.points.map((p) => (
-                    <li key={p} className="flex items-center gap-3 text-slate-200">
-                      <span className="grid h-6 w-6 place-items-center rounded-full bg-brand/20 text-sm text-brand">
-                        ✓
-                      </span>
-                      {p}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="relative">
-                <div className="card glow flex aspect-[4/3] items-center justify-center border-brand/20 bg-gradient-to-br from-surface-raised to-surface">
-                  <span className="text-7xl opacity-90">{f.icon}</span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </section>
-
-        {/* How it works */}
-        <section className="section">
-          <div className="text-center">
-            <div className="eyebrow">How it works</div>
-            <h2 className="mt-3 text-3xl font-bold sm:text-4xl">Set up in three steps</h2>
-          </div>
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {steps.map(([num, title, body]) => (
-              <div key={num} className="card">
-                <div className="grid h-10 w-10 place-items-center rounded-full bg-brand text-lg font-bold text-white">
-                  {num}
-                </div>
-                <h3 className="mt-4 text-lg font-semibold">{title}</h3>
-                <p className="mt-2 text-sm text-slate-400">{body}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Testimonials */}
-        <section className="section">
-          <div className="text-center">
-            <div className="eyebrow">Loved by server owners</div>
-            <h2 className="mt-3 text-3xl font-bold sm:text-4xl">Communities that bounced back</h2>
-          </div>
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {testimonials.map((t) => (
-              <figure key={t.name} className="card flex flex-col">
-                <div className="text-brand">★★★★★</div>
-                <blockquote className="mt-3 flex-1 text-sm text-slate-200">“{t.quote}”</blockquote>
-                <figcaption className="mt-4 border-t border-surface-border pt-4">
-                  <div className="font-medium">{t.name}</div>
-                  <div className="text-xs text-slate-500">{t.role}</div>
-                </figcaption>
-              </figure>
-            ))}
-          </div>
-        </section>
-
-        {/* Pricing preview */}
-        <section className="section">
-          <div className="text-center">
-            <div className="eyebrow">Pricing</div>
-            <h2 className="mt-3 text-3xl font-bold sm:text-4xl">Start free, upgrade anytime</h2>
-          </div>
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {tiers.map((t) => (
-              <div
-                key={t.name}
-                className={`card flex flex-col ${t.highlight ? 'border-brand ring-1 ring-brand/40' : ''}`}
-              >
-                <h3 className="text-lg font-semibold">{t.name}</h3>
-                <div className="mt-2 text-3xl font-bold">
-                  {t.price}
-                  <span className="text-sm font-normal text-slate-400">/mo</span>
-                </div>
-                <ul className="mt-6 flex-1 space-y-2 text-sm text-slate-300">
-                  {t.features.map((f) => (
-                    <li key={f} className="flex items-center gap-2">
-                      <span className="text-brand">✓</span>
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-                <Link
-                  href="/pricing"
-                  className={`mt-6 ${t.highlight ? 'btn-primary' : 'btn-ghost'}`}
-                >
-                  View plans
-                </Link>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Final CTA */}
-        <section className="section">
-          <div className="card glow relative overflow-hidden border-brand/30 bg-gradient-to-br from-brand/15 to-surface-raised py-14 text-center">
-            <h2 className="text-3xl font-bold sm:text-4xl">Ready to secure your community?</h2>
-            <p className="mx-auto mt-3 max-w-xl text-slate-300">
-              Connect your server in minutes. Free to start — no credit card, no member data
-              harvesting.
+        {/* Comparison */}
+        <section id="compare" className="border-t border-surface-border">
+          <div className="section">
+            <div className="eyebrow">Why Botport</div>
+            <h2 className="mt-2.5 max-w-2xl text-3xl font-bold sm:text-4xl">
+              Protection without the data harvesting
+            </h2>
+            <p className="mt-3 max-w-2xl text-slate-400">
+              Many “recovery” bots quietly store OAuth tokens and member data so they can add people
+              to other servers. Botport does not — and that difference is the whole point.
             </p>
-            <Link href="/login" className="btn-primary mt-8 inline-flex px-6 py-3 text-base">
-              Open the dashboard
-            </Link>
+            <div className="mt-8 overflow-x-auto rounded-xl border border-surface-border">
+              <table className="w-full border-collapse text-sm">
+                <thead>
+                  <tr className="bg-surface-raised text-xs uppercase tracking-wide text-slate-500">
+                    <th className="px-4 py-3.5 text-left font-medium">Capability</th>
+                    <th className="bg-brand/10 px-4 py-3.5 text-left font-medium text-brand">
+                      Botport
+                    </th>
+                    <th className="px-4 py-3.5 text-left font-medium">Typical member-pulling bot</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {compareRows.map(([cap, us, them, usGood]) => (
+                    <tr key={cap} className="border-t border-surface-border">
+                      <td className="px-4 py-3.5 text-slate-400">{cap}</td>
+                      <td
+                        className={`bg-brand/[0.06] px-4 py-3.5 font-semibold ${usGood ? 'text-emerald-400' : 'text-emerald-400'}`}
+                      >
+                        {us}
+                      </td>
+                      <td
+                        className={`px-4 py-3.5 font-semibold ${them === 'Yes' && !usGood ? 'text-red-400' : them === 'Often' || them === 'No' || them === 'Rarely' ? 'text-red-400' : 'text-slate-300'}`}
+                      >
+                        {them}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        {/* Commands */}
+        <section id="commands" className="border-t border-surface-border">
+          <div className="section">
+            <div className="eyebrow">Commands</div>
+            <h2 className="mt-2.5 text-3xl font-bold sm:text-4xl">Slash commands</h2>
+            <p className="mt-3 max-w-2xl text-slate-400">
+              Everything is on the dashboard too — but admins can run the essentials right from
+              Discord.
+            </p>
+            <div className="mt-8 overflow-hidden rounded-xl border border-surface-border">
+              {commands.map(([cmd, desc]) => (
+                <div
+                  key={cmd}
+                  className="flex flex-col gap-1 border-t border-surface-border px-4 py-3.5 first:border-t-0 sm:flex-row sm:items-baseline sm:gap-4"
+                >
+                  <code className="min-w-[160px] rounded bg-black/30 px-2 py-1 font-mono text-sm text-brand">
+                    {cmd}
+                  </code>
+                  <span className="text-sm text-slate-400">{desc}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Pricing */}
+        <section id="pricing" className="border-t border-surface-border">
+          <div className="section">
+            <div className="eyebrow">Pricing</div>
+            <h2 className="mt-2.5 text-3xl font-bold sm:text-4xl">Start free, upgrade when you grow</h2>
+            <div className="mt-10 grid gap-5 md:grid-cols-3">
+              {tiers.map((t) => (
+                <div
+                  key={t.name}
+                  className={`card flex flex-col ${t.highlight ? 'border-brand' : ''}`}
+                >
+                  <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-400">
+                    {t.name}
+                  </h3>
+                  <div className="mt-2 text-3xl font-bold">
+                    {t.price}
+                    <span className="text-sm font-normal text-slate-500"> / mo</span>
+                  </div>
+                  <ul className="mt-5 flex-1 space-y-2.5 text-sm">
+                    {t.features.map((f) => (
+                      <li key={f} className="flex gap-2.5">
+                        <CheckIcon className="mt-0.5 h-4 w-4 flex-none text-brand" />
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+                  <Link
+                    href="/login"
+                    className={`mt-6 ${t.highlight ? 'btn-primary' : 'btn-ghost'}`}
+                  >
+                    Add to Discord
+                  </Link>
+                </div>
+              ))}
+            </div>
+            <p className="mt-6 text-xs text-slate-500">
+              Prices are illustrative — billing is not enabled in this build.
+            </p>
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section className="border-t border-surface-border">
+          <div className="section">
+            <div className="card flex flex-wrap items-center justify-between gap-6 p-10">
+              <div>
+                <h2 className="text-2xl font-bold">Protect your server today</h2>
+                <p className="mt-2 text-slate-400">
+                  Free to start — no credit card, no member data harvesting.
+                </p>
+              </div>
+              <Link href="/login" className="btn-primary px-6 py-3">
+                Add to Discord
+              </Link>
+            </div>
           </div>
         </section>
       </main>
