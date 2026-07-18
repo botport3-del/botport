@@ -29,3 +29,19 @@ body {
 .card {
   @apply rounded-xl border border-surface-border bg-surface-raised p-5;
 }
+
+.gradient-text {
+  @apply bg-gradient-to-r from-white via-slate-200 to-brand bg-clip-text text-transparent;
+}
+
+.glow {
+  box-shadow: 0 0 120px -20px rgba(88, 101, 242, 0.55);
+}
+
+.section {
+  @apply container-page py-16 sm:py-24;
+}
+
+.eyebrow {
+  @apply text-sm font-semibold uppercase tracking-wider text-brand;
+}
