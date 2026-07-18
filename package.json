@@ -19,6 +19,7 @@
     "format": "prettier --write \"**/*.{ts,tsx,js,json,md}\""
   },
   "devDependencies": {
+    "playwright-core": "^1.61.1",
     "prettier": "^3.4.2",
     "typescript": "^5.7.3"
   }
