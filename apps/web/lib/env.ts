@@ -9,6 +9,9 @@ export const env = {
   get discordClientSecret(): string {
     return process.env.DISCORD_CLIENT_SECRET || '';
   },
+  get discordBotToken(): string {
+    return process.env.DISCORD_BOT_TOKEN || '';
+  },
   get authSecret(): string {
     return process.env.AUTH_SECRET || 'insecure-dev-secret-change-me';
   },

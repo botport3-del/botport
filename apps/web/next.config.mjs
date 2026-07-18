@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   // The shared `db` workspace package ships TypeScript source, so Next must
   // transpile it rather than expecting pre-built JS.
-  transpilePackages: ['db'],
+  transpilePackages: ['db', 'core'],
   images: {
     remotePatterns: [{ protocol: 'https', hostname: 'cdn.discordapp.com' }],
   },
