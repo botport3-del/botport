@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: botport-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: botport
+      POSTGRES_PASSWORD: botport
+      POSTGRES_DB: botport
+    ports:
+      - "5432:5432"
+    volumes:
+      - botport-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U botport"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  botport-pgdata:

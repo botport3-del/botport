@@ -1,0 +1,175 @@
+// Botport — Discord backup, recovery & verification platform
+// Legitimate VaultCord-style clone (no covert data harvesting, no token-based pulling).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// A dashboard user, authenticated via Discord OAuth.
+model User {
+  id            String   @id @default(cuid())
+  discordId     String   @unique
+  username      String
+  globalName    String?
+  avatar        String?
+  email         String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  ownedGuilds   Guild[]        @relation("GuildOwner")
+  staffMembers  StaffMember[]
+  auditLogs     AuditLog[]
+
+  @@index([discordId])
+}
+
+/// A Discord server connected to the platform.
+model Guild {
+  id           String   @id @default(cuid())
+  discordId    String   @unique
+  name         String
+  iconUrl      String?
+  ownerUserId  String
+  owner        User     @relation("GuildOwner", fields: [ownerUserId], references: [id], onDelete: Cascade)
+  connectedAt  DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  settings      GuildSettings?
+  backups       Backup[]
+  verifications Verification[]
+  blacklist     BlacklistEntry[]
+  staff         StaffMember[]
+  auditLogs     AuditLog[]
+
+  @@index([ownerUserId])
+}
+
+/// Per-guild configuration for verification, anti-raid and logging.
+model GuildSettings {
+  id                   String   @id @default(cuid())
+  guildId              String   @unique
+  guild                Guild    @relation(fields: [guildId], references: [id], onDelete: Cascade)
+
+  // Verification
+  verifyEnabled        Boolean  @default(false)
+  verifyRoleId         String?
+  captchaEnabled       Boolean  @default(true)
+  requireOAuthIdentify Boolean  @default(false) // transparent identify consent
+  autoRoleIds          String[] @default([])
+  verifyPageTitle      String?
+  verifyPageColor      String?  @default("#5865F2")
+
+  // Anti-raid (legitimate: no covert tracking)
+  minAccountAgeDays    Int      @default(0)
+  joinRateLimit        Int      @default(0) // joins per minute before raid alert; 0 = off
+  blockKnownVpns       Boolean  @default(false) // opt-in & disclosed to members
+
+  // Logging & backups
+  logChannelId         String?
+  backupSchedule       BackupSchedule @default(DAILY)
+
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+}
+
+enum BackupSchedule {
+  OFF
+  DAILY
+  HOURLY
+}
+
+/// A point-in-time snapshot of a server's structure (roles, channels, settings).
+model Backup {
+  id        String     @id @default(cuid())
+  guildId   String
+  guild     Guild      @relation(fields: [guildId], references: [id], onDelete: Cascade)
+  type      BackupType @default(MANUAL)
+  label     String?
+  data      Json       // { server, roles[], channels[] }
+  createdAt DateTime   @default(now())
+  createdBy String?    // discord user id
+
+  @@index([guildId, createdAt])
+}
+
+enum BackupType {
+  MANUAL
+  SCHEDULED
+}
+
+/// A verification attempt/record. Only consent-based fields are stored.
+model Verification {
+  id           String             @id @default(cuid())
+  guildId      String
+  guild        Guild              @relation(fields: [guildId], references: [id], onDelete: Cascade)
+  discordId    String
+  username     String?
+  status       VerificationStatus @default(PENDING)
+  method       String             @default("captcha") // "captcha" | "oauth"
+  consentGiven Boolean            @default(false)
+  createdAt    DateTime           @default(now())
+  completedAt  DateTime?
+
+  @@index([guildId, discordId])
+}
+
+enum VerificationStatus {
+  PENDING
+  PASSED
+  FAILED
+}
+
+/// Manual blacklist of Discord user IDs per guild.
+model BlacklistEntry {
+  id        String   @id @default(cuid())
+  guildId   String
+  guild     Guild    @relation(fields: [guildId], references: [id], onDelete: Cascade)
+  discordId String
+  reason    String?
+  addedBy   String?
+  createdAt DateTime @default(now())
+
+  @@unique([guildId, discordId])
+}
+
+/// Staff access with role-based permissions, scoped to a guild.
+model StaffMember {
+  id          String     @id @default(cuid())
+  guildId     String
+  guild       Guild      @relation(fields: [guildId], references: [id], onDelete: Cascade)
+  userId      String?
+  user        User?      @relation(fields: [userId], references: [id], onDelete: SetNull)
+  email       String?    // for pending invites before first login
+  role        StaffRole  @default(MOD)
+  permissions String[]   @default([])
+  invitedBy   String?
+  createdAt   DateTime   @default(now())
+
+  @@unique([guildId, email])
+  @@index([guildId, userId])
+}
+
+enum StaffRole {
+  OWNER
+  ADMIN
+  MOD
+}
+
+/// Audit trail of privileged actions.
+model AuditLog {
+  id        String   @id @default(cuid())
+  guildId   String
+  guild     Guild    @relation(fields: [guildId], references: [id], onDelete: Cascade)
+  actorId   String?
+  actor     User?    @relation(fields: [actorId], references: [id], onDelete: SetNull)
+  action    String
+  meta      Json?
+  createdAt DateTime @default(now())
+
+  @@index([guildId, createdAt])
+}
