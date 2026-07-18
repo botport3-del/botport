@@ -72,7 +72,14 @@ local development.
 | `pnpm typecheck`    | Type-check every workspace                   |
 | `pnpm test`         | Run tests                                    |
 
+## Deploying
+
+See [`DEPLOYMENT.md`](./DEPLOYMENT.md) for a step-by-step guide: create a Discord
+application, provision Postgres (Neon), deploy the web app to Vercel and the bot
+to a worker host, run migrations, and go live. Secrets live only in each host's
+environment variables — never in the repository.
+
 ## Status
 
-Built in milestones — see the project plan. This repository currently contains the
-scaffold plus features landed per milestone.
+Web dashboard, verify flow, backups/restore, bot commands and the marketing site
+are implemented and tested. Billing is not wired up (pricing is illustrative).

@@ -8,6 +8,7 @@
     "node": ">=20"
   },
   "scripts": {
+    "postinstall": "pnpm --filter db generate",
     "dev": "pnpm --parallel --filter \"./apps/*\" dev",
     "build": "pnpm --filter db build && pnpm --filter web build && pnpm --filter bot build",
     "lint": "pnpm -r lint",
@@ -15,11 +16,11 @@
     "test": "pnpm -r test",
     "db:generate": "pnpm --filter db generate",
     "db:migrate": "pnpm --filter db migrate",
+    "db:migrate:deploy": "pnpm --filter db migrate:deploy",
     "db:seed": "pnpm --filter db seed",
     "format": "prettier --write \"**/*.{ts,tsx,js,json,md}\""
   },
   "devDependencies": {
-    "playwright-core": "^1.61.1",
     "prettier": "^3.4.2",
     "typescript": "^5.7.3"
   }
