@@ -2,6 +2,7 @@ import { Client, Events, GatewayIntentBits, Partials } from 'discord.js';
 import { env } from './env.js';
 import { commandMap } from './commands/index.js';
 import { startBackupScheduler } from './cron.js';
+import { handleVerifyButton, VERIFY_BUTTON_ID } from './lib/verify-service.js';
 
 /**
  * Botport worker entrypoint.
@@ -35,18 +36,23 @@ async function main() {
   });
 
   client.on(Events.InteractionCreate, async (interaction) => {
-    if (!interaction.isChatInputCommand()) return;
-    const command = commandMap.get(interaction.commandName);
-    if (!command) return;
     try {
-      await command.execute(interaction);
+      if (interaction.isButton()) {
+        if (interaction.customId === VERIFY_BUTTON_ID) {
+          await handleVerifyButton(interaction);
+        }
+        return;
+      }
+      if (interaction.isChatInputCommand()) {
+        const command = commandMap.get(interaction.commandName);
+        if (command) await command.execute(interaction);
+      }
     } catch (err) {
-      console.error(`[bot] command ${interaction.commandName} failed:`, err);
-      const msg = { content: 'Something went wrong running that command.', ephemeral: true };
-      if (interaction.deferred || interaction.replied) {
-        await interaction.editReply(msg.content).catch(() => {});
-      } else {
-        await interaction.reply(msg).catch(() => {});
+      console.error('[bot] interaction failed:', err);
+      if (interaction.isRepliable() && !interaction.replied && !interaction.deferred) {
+        await interaction
+          .reply({ content: 'Something went wrong.', ephemeral: true })
+          .catch(() => {});
       }
     }
   });

@@ -49,6 +49,7 @@ function readMock(): DiscordRest {
     async patch() {
       throw new Error('read mock cannot patch');
     },
+    async put() {},
     async delete() {},
   };
 }
@@ -102,6 +103,7 @@ function writeMock() {
       patched = true;
       return undefined as T;
     },
+    async put() {},
     async delete() {},
   };
 

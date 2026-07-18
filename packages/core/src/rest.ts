@@ -9,6 +9,7 @@ export interface DiscordRest {
   get<T>(path: string): Promise<T>;
   post<T>(path: string, body: unknown): Promise<T>;
   patch<T>(path: string, body: unknown): Promise<T>;
+  put(path: string, body?: unknown): Promise<void>;
   delete(path: string): Promise<void>;
 }
 
@@ -48,6 +49,15 @@ export function createRest(botToken: string, apiBase: string = DISCORD_API): Dis
           method: 'PATCH',
           headers,
           body: JSON.stringify(body),
+        }),
+      );
+    },
+    async put(path: string, body?: unknown): Promise<void> {
+      await handle<void>(
+        await fetch(`${apiBase}${path}`, {
+          method: 'PUT',
+          headers,
+          body: body === undefined ? undefined : JSON.stringify(body),
         }),
       );
     },

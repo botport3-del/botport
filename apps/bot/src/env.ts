@@ -18,4 +18,7 @@ export const env = {
   get appBaseUrl(): string {
     return process.env.APP_BASE_URL || 'http://localhost:3000';
   },
+  get authSecret(): string {
+    return process.env.AUTH_SECRET || 'insecure-dev-secret-change-me';
+  },
 };
