@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
     hasDiscordPublicKey: Boolean(env.discordPublicKey),
     hasCronSecret: Boolean(env.cronSecret),
     hasAppBaseUrl: env.appBaseUrl,
-    codeVersion: 'guild-sync-v1',
+    codeVersion: 'guild-sync-v2',
   };
 
   if (env.discordBotToken) {
