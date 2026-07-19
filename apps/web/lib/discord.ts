@@ -26,10 +26,10 @@ export interface DiscordGuildSummary {
   permissions: string;
 }
 
-export function buildAuthorizeUrl(state: string): string {
+export function buildAuthorizeUrl(state: string, redirectUri: string): string {
   const params = new URLSearchParams({
     client_id: env.discordClientId,
-    redirect_uri: `${env.appBaseUrl}/api/auth/callback`,
+    redirect_uri: redirectUri,
     response_type: 'code',
     scope: 'identify email guilds',
     state,
@@ -48,7 +48,10 @@ export function botInviteUrl(guildId?: string): string {
   return `${DISCORD_API.replace('/api/v10', '')}/oauth2/authorize?${params.toString()}`;
 }
 
-export async function exchangeCode(code: string): Promise<{ access_token: string }> {
+export async function exchangeCode(
+  code: string,
+  redirectUri: string,
+): Promise<{ access_token: string }> {
   const res = await fetch(`${DISCORD_API}/oauth2/token`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -57,7 +60,7 @@ export async function exchangeCode(code: string): Promise<{ access_token: string
       client_secret: env.discordClientSecret,
       grant_type: 'authorization_code',
       code,
-      redirect_uri: `${env.appBaseUrl}/api/auth/callback`,
+      redirect_uri: redirectUri,
     }),
   });
   if (!res.ok) throw new Error(`Discord token exchange failed: ${res.status}`);

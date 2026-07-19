@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { prisma } from 'db';
-import { env } from '@/lib/env';
 import { exchangeCode, fetchDiscordUser } from '@/lib/discord';
 import { createSession } from '@/lib/session';
+import { getBaseUrl } from '@/lib/base-url';
 
 export async function GET(req: NextRequest) {
+  const base = await getBaseUrl();
   const url = new URL(req.url);
   const code = url.searchParams.get('code');
   const state = url.searchParams.get('state');
@@ -15,11 +16,11 @@ export async function GET(req: NextRequest) {
   store.delete('bp_oauth_state');
 
   if (!code || !state || !expectedState || state !== expectedState) {
-    return NextResponse.redirect(`${env.appBaseUrl}/login?error=oauth_state`);
+    return NextResponse.redirect(`${base}/login?error=oauth_state`);
   }
 
   try {
-    const { access_token } = await exchangeCode(code);
+    const { access_token } = await exchangeCode(code, `${base}/api/auth/callback`);
     const discordUser = await fetchDiscordUser(access_token);
 
     const user = await prisma.user.upsert({
@@ -45,9 +46,9 @@ export async function GET(req: NextRequest) {
       accessToken: access_token,
     });
 
-    return NextResponse.redirect(`${env.appBaseUrl}/dashboard`);
+    return NextResponse.redirect(`${base}/dashboard`);
   } catch (err) {
     console.error('[auth] callback failed', err);
-    return NextResponse.redirect(`${env.appBaseUrl}/login?error=oauth_failed`);
+    return NextResponse.redirect(`${base}/login?error=oauth_failed`);
   }
 }

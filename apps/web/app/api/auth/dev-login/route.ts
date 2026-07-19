@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { prisma } from 'db';
 import { env } from '@/lib/env';
 import { createSession } from '@/lib/session';
+import { getBaseUrl } from '@/lib/base-url';
 
 /**
  * Local-only login shortcut used when no Discord OAuth app is configured.
@@ -25,5 +26,5 @@ export async function GET() {
   });
 
   await createSession({ userId: user.id, discordId: user.discordId });
-  return NextResponse.redirect(`${env.appBaseUrl}/dashboard`);
+  return NextResponse.redirect(`${await getBaseUrl()}/dashboard`);
 }
