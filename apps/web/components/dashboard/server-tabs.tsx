@@ -10,6 +10,7 @@ export function ServerTabs({ guildId }: { guildId: string }) {
     { href: base, label: 'Overview', exact: true },
     { href: `${base}/structure`, label: 'Roles & channels' },
     { href: `${base}/members`, label: 'Members' },
+    { href: `${base}/transfer`, label: 'Transfer' },
     { href: `${base}/backups`, label: 'Backups' },
     { href: `${base}/verification`, label: 'Verification' },
     { href: `${base}/logs`, label: 'Logs' },

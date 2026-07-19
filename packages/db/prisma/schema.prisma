@@ -116,6 +116,12 @@ model Verification {
   consentGiven  Boolean            @default(false)
   /// Snapshot of the member's roles at last known state — used to restore roles on rejoin.
   memberRoleIds String[]           @default([])
+  /// Encrypted OAuth refresh token, when the member consented to `guilds.join`.
+  /// Only used to (re)add the member to servers **operated by the same owner**
+  /// on explicit owner action. Cleared on request.
+  oauthRefreshToken String?
+  /// When the member granted the `guilds.join` scope on the verify page.
+  oauthConsentAt    DateTime?
   createdAt     DateTime           @default(now())
   completedAt   DateTime?
 
