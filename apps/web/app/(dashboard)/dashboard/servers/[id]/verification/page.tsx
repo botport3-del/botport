@@ -1,6 +1,8 @@
 import { requireUser } from '@/lib/auth';
 import { requireGuildAccess } from '@/lib/guild-access';
+import { listGuildChannels } from '@/lib/discord/bot-api';
 import { VerificationForm } from './verification-form';
+import { PostEmbedForm } from './post-embed-form';
 
 export const dynamic = 'force-dynamic';
 
@@ -14,15 +16,29 @@ export default async function VerificationPage({
   const guild = await requireGuildAccess(user.id, id);
   const s = guild.settings;
 
+  // Fetch channels via the bot so the user can pick from a dropdown.
+  const channels = (await listGuildChannels(guild.discordId))
+    .filter((c) => c.type === 0 || c.type === 5) // text/announcement only
+    .sort((a, b) => a.position - b.position);
+
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <div>
-        <h2 className="text-lg font-semibold">Verification</h2>
+        <div className="font-mono text-xs uppercase tracking-wider text-brand">Verification</div>
+        <h2 className="mt-1.5 text-lg font-semibold">Verification settings</h2>
         <p className="text-sm text-slate-400">
-          Configure how new members verify. Members reach the verify page from the button posted by
-          the <code>/verify-embed</code> command.
+          Configure how new members verify, and post the Verify button into a channel - all from
+          here.
         </p>
       </div>
+
+      <PostEmbedForm
+        guildId={guild.id}
+        channels={channels.map((c) => ({ id: c.id, name: c.name }))}
+        defaultTitle={s?.verifyPageTitle ?? ''}
+        defaultDescription=""
+      />
+
       <VerificationForm
         guildId={guild.id}
         settings={{
