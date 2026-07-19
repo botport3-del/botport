@@ -3,6 +3,7 @@ import { prisma } from 'db';
 import { requireUser } from '@/lib/auth';
 import { requireGuildAccess } from '@/lib/guild-access';
 import { StatCard } from '@/components/dashboard/stat-card';
+import { ArchiveIcon, ShieldIcon, GateIcon } from '@/components/icons';
 
 export const dynamic = 'force-dynamic';
 
@@ -27,11 +28,23 @@ export default async function ServerOverviewPage({
   return (
     <div className="space-y-6">
       <div className="grid gap-4 sm:grid-cols-3">
-        <StatCard label="Backups" value={backups} />
-        <StatCard label="Verified members" value={verified} />
+        <StatCard
+          label="Backups"
+          value={backups}
+          icon={<ArchiveIcon className="h-5 w-5" />}
+          accent="slate"
+        />
+        <StatCard
+          label="Verified members"
+          value={verified}
+          icon={<ShieldIcon className="h-5 w-5" />}
+          accent="emerald"
+        />
         <StatCard
           label="Verification"
           value={guild.settings?.verifyEnabled ? 'On' : 'Off'}
+          icon={<GateIcon className="h-5 w-5" />}
+          accent={guild.settings?.verifyEnabled ? 'emerald' : 'brand'}
         />
       </div>
 

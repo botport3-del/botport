@@ -14,7 +14,8 @@ export default async function ServersPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-semibold">Servers</h1>
+        <div className="font-mono text-xs uppercase tracking-wider text-brand">Servers</div>
+        <h1 className="mt-1.5 text-2xl font-bold">Your servers</h1>
         <p className="mt-1 text-sm text-slate-400">
           Connect a server by adding the Botport bot, then configure it here.
         </p>
