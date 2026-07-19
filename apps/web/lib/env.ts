@@ -12,6 +12,12 @@ export const env = {
   get discordBotToken(): string {
     return process.env.DISCORD_BOT_TOKEN || '';
   },
+  get discordPublicKey(): string {
+    return process.env.DISCORD_PUBLIC_KEY || '';
+  },
+  get cronSecret(): string {
+    return process.env.CRON_SECRET || '';
+  },
   get authSecret(): string {
     return process.env.AUTH_SECRET || 'insecure-dev-secret-change-me';
   },
