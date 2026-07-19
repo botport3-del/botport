@@ -24,7 +24,7 @@ export default async function LoginPage({
         {error && (
           <p className="mt-4 rounded-lg border border-red-500/40 bg-red-500/10 px-3 py-2 text-sm text-red-300">
             {error === 'oauth_state'
-              ? 'Login session expired — please try again.'
+              ? 'Login session expired - please try again.'
               : 'Something went wrong signing in. Please try again.'}
           </p>
         )}
@@ -38,7 +38,7 @@ export default async function LoginPage({
 
         {env.devLoginEnabled && (
           <p className="mt-4 text-xs text-slate-500">
-            Dev mode: no Discord app configured — the button uses a local demo account.
+            Dev mode: no Discord app configured - the button uses a local demo account.
           </p>
         )}
 

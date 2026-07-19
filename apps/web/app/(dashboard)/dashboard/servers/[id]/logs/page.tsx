@@ -26,7 +26,7 @@ export default async function LogsPage({ params }: { params: Promise<{ id: strin
       <div>
         <h2 className="text-lg font-semibold">Verification logs</h2>
         <p className="text-sm text-slate-400">
-          Consent-based records only — Discord username, result and time. No IP, email or device
+          Consent-based records only - Discord username, result and time. No IP, email or device
           data is stored.
         </p>
       </div>
@@ -48,7 +48,7 @@ export default async function LogsPage({ params }: { params: Promise<{ id: strin
               {logs.map((l) => (
                 <tr key={l.id} className="border-b border-surface-border/50 last:border-0">
                   <td className="px-4 py-3">
-                    <div>{l.username || '—'}</div>
+                    <div>{l.username || '-'}</div>
                     <div className="font-mono text-xs text-slate-500">{l.discordId}</div>
                   </td>
                   <td className={`px-4 py-3 font-medium ${STATUS_STYLES[l.status] ?? ''}`}>

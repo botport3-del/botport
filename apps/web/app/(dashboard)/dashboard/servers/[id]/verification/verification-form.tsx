@@ -98,7 +98,7 @@ export function VerificationForm({
         <Toggle
           name="requireOAuthIdentify"
           label="Require Discord identify (with consent)"
-          hint="Ask members to confirm their Discord identity. Transparent — shown on the page."
+          hint="Ask members to confirm their Discord identity. Transparent - shown on the page."
           defaultChecked={settings.requireOAuthIdentify}
         />
       </div>

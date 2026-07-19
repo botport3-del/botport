@@ -13,7 +13,7 @@ function Shell({ children, color }: { children: React.ReactNode; color?: string 
           className="mx-auto grid h-12 w-12 place-items-center rounded-xl text-xl font-bold text-white"
           style={{ backgroundColor: color || '#5865F2' }}
         >
-          ✓
+          B
         </div>
         {children}
       </div>
@@ -68,7 +68,7 @@ export default async function VerifyPage({
       </h1>
       <p className="mt-2 text-sm text-slate-400">
         Complete the check below to gain access. We only store your Discord username and the fact
-        that you verified — never your IP, email or device.
+        that you verified - never your IP, email or device.
       </p>
 
       <div className="mt-6">

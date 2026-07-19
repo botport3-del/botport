@@ -16,7 +16,7 @@ const groups = [
   {
     title: 'Verification & anti-raid',
     items: [
-      ['Transparent CAPTCHA', 'Cloudflare Turnstile challenge — privacy-friendly, no tracking.'],
+      ['Transparent CAPTCHA', 'Cloudflare Turnstile challenge - privacy-friendly, no tracking.'],
       ['Consent-based identity', 'Optional Discord identify with a visible consent notice.'],
       ['Minimum account age', 'Reject brand-new accounts using the account creation date.'],
       ['Blacklist & review', 'Block known bad actors and review verification logs.'],
@@ -41,7 +41,7 @@ export default function FeaturesPage() {
         <div className="eyebrow">Features</div>
         <h1 className="mt-2.5 text-4xl font-bold">Everything to protect and recover a server</h1>
         <p className="mt-3 max-w-2xl text-slate-400">
-          Everything you need to protect and recover your Discord community — without harvesting
+          Everything you need to protect and recover your Discord community - without harvesting
           your members&apos; data.
         </p>
 

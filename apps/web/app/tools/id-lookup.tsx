@@ -57,7 +57,7 @@ export function IdLookup() {
       )}
 
       <p className="mt-4 text-xs text-slate-500">
-        Computed entirely in your browser from the ID&apos;s timestamp — no lookup or tracking.
+        Computed entirely in your browser from the ID&apos;s timestamp - no lookup or tracking.
       </p>
     </div>
   );

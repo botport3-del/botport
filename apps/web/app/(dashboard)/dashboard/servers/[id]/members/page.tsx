@@ -52,7 +52,7 @@ export default async function MembersPage({ params }: { params: Promise<{ id: st
               {members.map((m) => (
                 <tr key={m.id} className="border-b border-surface-border/50 last:border-0">
                   <td className="px-4 py-3">
-                    <div>{m.username || '—'}</div>
+                    <div>{m.username || '-'}</div>
                     <div className="font-mono text-xs text-slate-500">{m.discordId}</div>
                   </td>
                   <td className="px-4 py-3">

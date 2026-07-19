@@ -108,7 +108,7 @@ export function SettingsPanel({
               <li key={b.id} className="flex items-center justify-between text-sm">
                 <div>
                   <span className="font-mono">{b.discordId}</span>
-                  {b.reason && <span className="ml-2 text-slate-500">— {b.reason}</span>}
+                  {b.reason && <span className="ml-2 text-slate-500">- {b.reason}</span>}
                 </div>
                 {canManage && (
                   <form action={removeBlacklist.bind(null, guildId, b.id)}>

@@ -7,7 +7,7 @@ const features = [
   {
     Icon: ArchiveIcon,
     title: 'Automatic backups',
-    body: 'Hourly or daily snapshots of roles, channels, categories, permissions and server settings — stored and ready to restore.',
+    body: 'Hourly or daily snapshots of roles, channels, categories, permissions and server settings - stored and ready to restore.',
   },
   {
     Icon: ShieldIcon,
@@ -38,7 +38,7 @@ const commands: [string, string][] = [
   ['/backup', 'Take a snapshot of the server now.'],
   ['/restore', 'Rebuild the server from its most recent backup.'],
   ['/verify-embed', 'Post the verification message with a Verify button.'],
-  ['/blacklist add · remove', 'Block or unblock a user from verifying.'],
+  ['/blacklist add / remove', 'Block or unblock a user from verifying.'],
   ['/info', "Show a member's verification status and account age."],
 ];
 
@@ -71,7 +71,7 @@ export default function HomePage() {
             </h1>
             <p className="mt-5 max-w-md text-lg text-slate-400">
               Botport keeps automatic backups of your roles, channels and settings, and screens new
-              members with a CAPTCHA gate — without logging their IPs, emails or storing OAuth
+              members with a CAPTCHA gate - without logging their IPs, emails or storing OAuth
               tokens.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
@@ -84,13 +84,13 @@ export default function HomePage() {
             </div>
             <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm text-slate-500">
               <span>
-                <span className="font-semibold text-emerald-400">✓</span> No OAuth token storage
+                <CheckIcon className="inline h-3.5 w-3.5 text-emerald-400" /> No OAuth token storage
               </span>
               <span>
-                <span className="font-semibold text-emerald-400">✓</span> No IP or email logging
+                <CheckIcon className="inline h-3.5 w-3.5 text-emerald-400" /> No IP or email logging
               </span>
               <span>
-                <span className="font-semibold text-emerald-400">✓</span> Restores your own server
+                <CheckIcon className="inline h-3.5 w-3.5 text-emerald-400" /> Restores your own server
               </span>
             </div>
           </div>
@@ -101,7 +101,7 @@ export default function HomePage() {
               <span className="h-2.5 w-2.5 rounded-full bg-surface-border" />
               <span className="h-2.5 w-2.5 rounded-full bg-surface-border" />
               <span className="h-2.5 w-2.5 rounded-full bg-surface-border" />
-              <span className="ml-2 font-mono text-xs text-slate-500">botport · restore</span>
+              <span className="ml-2 font-mono text-xs text-slate-500">botport / restore</span>
             </div>
             <div className="p-4">
               <div className="mb-3 flex items-center justify-between">
@@ -113,8 +113,8 @@ export default function HomePage() {
               {[
                 ['#', 'general', 'channel'],
                 ['#', 'announcements', 'channel'],
-                ['◈', 'Member', 'role'],
-                ['◈', 'Moderator', 'role'],
+                ['@', 'Member', 'role'],
+                ['@', 'Moderator', 'role'],
               ].map(([sym, name, kind]) => (
                 <div
                   key={name}
@@ -122,11 +122,11 @@ export default function HomePage() {
                 >
                   <span className="text-slate-500">{sym}</span>
                   <span className="flex-1">{name}</span>
-                  <span className="text-xs font-medium text-emerald-400">✓ {kind}</span>
+                  <span className="text-xs font-medium text-emerald-400">{kind}</span>
                 </div>
               ))}
               <div className="mt-3.5 flex justify-between text-xs text-slate-500">
-                <span className="font-mono">42 roles · 68 channels</span>
+                <span className="font-mono">42 roles / 68 channels</span>
                 <span>restored in 3.1s</span>
               </div>
             </div>
@@ -141,7 +141,7 @@ export default function HomePage() {
               Everything to protect and recover a server
             </h2>
             <p className="mt-3 max-w-2xl text-slate-400">
-              Four things a community needs when a raid hits — and nothing that quietly collects your
+              Four things a community needs when a raid hits - and nothing that quietly collects your
               members&apos; data.
             </p>
             <div className="mt-10 grid gap-5 sm:grid-cols-2">
@@ -167,7 +167,7 @@ export default function HomePage() {
             </h2>
             <p className="mt-3 max-w-2xl text-slate-400">
               Many “recovery” bots quietly store OAuth tokens and member data so they can add people
-              to other servers. Botport does not — and that difference is the whole point.
+              to other servers. Botport does not - and that difference is the whole point.
             </p>
             <div className="mt-8 overflow-x-auto rounded-xl border border-surface-border">
               <table className="w-full border-collapse text-sm">
@@ -208,7 +208,7 @@ export default function HomePage() {
             <div className="eyebrow">Commands</div>
             <h2 className="mt-2.5 text-3xl font-bold sm:text-4xl">Slash commands</h2>
             <p className="mt-3 max-w-2xl text-slate-400">
-              Everything is on the dashboard too — but admins can run the essentials right from
+              Everything is on the dashboard too - but admins can run the essentials right from
               Discord.
             </p>
             <div className="mt-8 overflow-hidden rounded-xl border border-surface-border">
@@ -263,7 +263,7 @@ export default function HomePage() {
               ))}
             </div>
             <p className="mt-6 text-xs text-slate-500">
-              Prices are illustrative — billing is not enabled in this build.
+              Prices are illustrative - billing is not enabled in this build.
             </p>
           </div>
         </section>
@@ -275,7 +275,7 @@ export default function HomePage() {
               <div>
                 <h2 className="text-2xl font-bold">Protect your server today</h2>
                 <p className="mt-2 text-slate-400">
-                  Free to start — no credit card, no member data harvesting.
+                  Free to start - no credit card, no member data harvesting.
                 </p>
               </div>
               <Link href="/login" className="btn-primary px-6 py-3">

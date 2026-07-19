@@ -55,7 +55,7 @@ export default async function OverviewPage() {
         <div className="mb-3 flex items-center justify-between">
           <h2 className="text-lg font-semibold">Your servers</h2>
           <Link href="/dashboard/servers" className="text-sm text-brand hover:underline">
-            Manage all →
+            Manage all
           </Link>
         </div>
 

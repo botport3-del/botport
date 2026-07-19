@@ -101,7 +101,7 @@ function BackupRow({ guildId, backup }: { guildId: string; backup: BackupView })
         <div>
           <div className="font-medium">{backup.label}</div>
           <div className="text-xs text-slate-500">
-            {backup.type} · {new Date(backup.createdAt).toLocaleString()} · {backup.roles} roles ·{' '}
+            {backup.type} / {new Date(backup.createdAt).toLocaleString()} / {backup.roles} roles /{' '}
             {backup.channels} channels
           </div>
         </div>

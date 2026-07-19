@@ -53,7 +53,7 @@ export default async function ServerOverviewPage({
           <h3 className="font-semibold">Latest backup</h3>
           {latestBackup ? (
             <p className="mt-2 text-sm text-slate-400">
-              {latestBackup.label || latestBackup.type} —{' '}
+              {latestBackup.label || latestBackup.type} -{' '}
               {latestBackup.createdAt.toLocaleString()}
             </p>
           ) : (

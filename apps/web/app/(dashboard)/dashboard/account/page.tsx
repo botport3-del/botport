@@ -31,7 +31,7 @@ export default async function AccountPage() {
           <dt className="text-slate-500">Discord ID</dt>
           <dd className="font-mono">{user.discordId}</dd>
           <dt className="text-slate-500">Email</dt>
-          <dd>{user.email || '—'}</dd>
+          <dd>{user.email || '-'}</dd>
           <dt className="text-slate-500">Member since</dt>
           <dd>{user.createdAt.toLocaleDateString()}</dd>
         </dl>

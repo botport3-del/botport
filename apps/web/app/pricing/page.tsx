@@ -70,7 +70,7 @@ export default function PricingPage() {
           ))}
         </div>
         <p className="mt-8 text-xs text-slate-500">
-          Prices are illustrative — billing is not enabled in this build.
+          Prices are illustrative - billing is not enabled in this build.
         </p>
       </main>
       <SiteFooter />

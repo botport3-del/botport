@@ -6,7 +6,7 @@ export const metadata = { title: 'FAQ' };
 const faqs = [
   [
     'Does Botport steal or "pull" members into other servers?',
-    'No. Botport never stores OAuth tokens to add members elsewhere — that violates Discord’s Terms of Service. Recovery only re-creates your own server’s structure.',
+    'No. Botport never stores OAuth tokens to add members elsewhere - that violates Discord’s Terms of Service. Recovery only re-creates your own server’s structure.',
   ],
   [
     'What member data do you collect?',
@@ -14,7 +14,7 @@ const faqs = [
   ],
   [
     'Can you restore my messages?',
-    'Backups capture server structure — roles, channels, categories, permissions and settings. Discord does not allow re-posting message history as the original authors, so message content is not restored.',
+    'Backups capture server structure - roles, channels, categories, permissions and settings. Discord does not allow re-posting message history as the original authors, so message content is not restored.',
   ],
   [
     'How does verification work?',

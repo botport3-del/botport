@@ -12,9 +12,9 @@ function roleColor(color: number): string {
 }
 
 function channelGlyph(type: number): string {
-  if (type === 2 || type === 13) return '🔊';
-  if (type === 15) return '💬';
-  if (type === 5) return '📢';
+  if (type === 2 || type === 13) return 'VC';
+  if (type === 15) return 'FR';
+  if (type === 5) return 'AN';
   return '#';
 }
 
