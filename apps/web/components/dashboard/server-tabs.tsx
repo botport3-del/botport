@@ -8,6 +8,8 @@ export function ServerTabs({ guildId }: { guildId: string }) {
   const base = `/dashboard/servers/${guildId}`;
   const tabs = [
     { href: base, label: 'Overview', exact: true },
+    { href: `${base}/structure`, label: 'Roles & channels' },
+    { href: `${base}/members`, label: 'Members' },
     { href: `${base}/backups`, label: 'Backups' },
     { href: `${base}/verification`, label: 'Verification' },
     { href: `${base}/logs`, label: 'Logs' },
