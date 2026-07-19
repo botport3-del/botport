@@ -13,6 +13,8 @@ export function ServerTabs({ guildId }: { guildId: string }) {
     { href: `${base}/backups`, label: 'Backups' },
     { href: `${base}/verification`, label: 'Verification' },
     { href: `${base}/logs`, label: 'Logs' },
+    { href: `${base}/stats`, label: 'Stats' },
+    { href: `${base}/audit`, label: 'Audit' },
     { href: `${base}/team`, label: 'Team' },
     { href: `${base}/settings`, label: 'Settings' },
   ];
