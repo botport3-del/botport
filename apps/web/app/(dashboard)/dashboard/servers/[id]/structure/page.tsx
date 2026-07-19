@@ -43,7 +43,7 @@ export default async function StructurePage({ params }: { params: Promise<{ id: 
   const categories = snap.channels.filter((c) => c.type === 4).sort((a, b) => a.position - b.position);
   const byParent = (parentId: string | null) =>
     snap.channels
-      .filter((c) => c.type !== 4 && c.parentId === parentId)
+      .filter((c) => c.type !== 4 && (c.parentId ?? null) === parentId)
       .sort((a, b) => a.position - b.position);
   const uncategorised = byParent(null);
 
