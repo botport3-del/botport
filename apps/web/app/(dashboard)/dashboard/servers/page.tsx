@@ -17,7 +17,7 @@ export default async function ServersPage() {
         <div className="font-mono text-xs uppercase tracking-wider text-brand">Servers</div>
         <h1 className="mt-1.5 text-2xl font-bold">Your servers</h1>
         <p className="mt-1 text-sm text-slate-400">
-          Connect a server by adding the Botport bot, then configure it here.
+          Connect a server by adding the Devorju bot, then configure it here.
         </p>
       </div>
 
@@ -66,12 +66,12 @@ export default async function ServersPage() {
         ) : (
           <div className="card space-y-3 text-sm text-slate-400">
             <p>
-              Invite the Botport bot to a server you manage. Once it joins, the server appears in
+              Invite the Devorju bot to a server you manage. Once it joins, the server appears in
               your connected list.
             </p>
             {env.discordClientId ? (
               <a href={botInviteUrl()} target="_blank" rel="noreferrer" className="btn-primary inline-flex">
-                Invite Botport bot
+                Invite Devorju bot
               </a>
             ) : (
               <p className="text-xs text-slate-500">

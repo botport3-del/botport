@@ -15,8 +15,8 @@ export function Sidebar() {
   return (
     <aside className="hidden w-60 shrink-0 border-r border-surface-border bg-surface-raised md:block">
       <div className="flex h-16 items-center gap-2 border-b border-surface-border px-5 font-semibold">
-        <span className="grid h-8 w-8 place-items-center rounded-lg bg-brand text-white">B</span>
-        Botport
+        <span className="grid h-8 w-8 place-items-center rounded-lg bg-brand text-white">D</span>
+        Devorju
       </div>
       <nav className="flex flex-col gap-1 p-3">
         {nav.map((item) => {

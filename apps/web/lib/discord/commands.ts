@@ -95,7 +95,7 @@ function handleRestore(guildId: string, token: string): CommandResult {
     work: async () => {
       const guild = await prisma.guild.findUnique({ where: { discordId: guildId } });
       if (!guild) {
-        await editOriginalResponse(token, { content: 'This server is not connected to Botport.' });
+        await editOriginalResponse(token, { content: 'This server is not connected to Devorju.' });
         return;
       }
       const backup = await prisma.backup.findFirst({
@@ -128,7 +128,7 @@ async function handleBlacklist(
 ): Promise<CommandResult> {
   const guild = await prisma.guild.findUnique({ where: { discordId: guildId } });
   if (!guild) {
-    return { kind: 'immediate', response: ephemeral('This server is not connected to Botport.') };
+    return { kind: 'immediate', response: ephemeral('This server is not connected to Devorju.') };
   }
 
   const addSub = findOption(getOptions(interaction), 'add') as
@@ -164,7 +164,7 @@ async function handleBlacklist(
 
 async function handleInfo(guildId: string, interaction: Interaction): Promise<CommandResult> {
   const guild = await prisma.guild.findUnique({ where: { discordId: guildId } });
-  if (!guild) return { kind: 'immediate', response: ephemeral('This server is not connected to Botport.') };
+  if (!guild) return { kind: 'immediate', response: ephemeral('This server is not connected to Devorju.') };
 
   const userOpt = findOption(getOptions(interaction), 'user');
   const targetId = userOpt && userOpt.type === ApplicationCommandOptionType.User ? userOpt.value : undefined;

@@ -70,7 +70,7 @@ export default function HomePage() {
               Rebuild your server in <span className="text-brand">one click</span> after a raid.
             </h1>
             <p className="mt-5 max-w-md text-lg text-slate-400">
-              Botport keeps automatic backups of your roles, channels and settings, and screens new
+              Devorju keeps automatic backups of your roles, channels and settings, and screens new
               members with a CAPTCHA gate - without logging their IPs, emails or storing OAuth
               tokens.
             </p>
@@ -101,7 +101,7 @@ export default function HomePage() {
               <span className="h-2.5 w-2.5 rounded-full bg-surface-border" />
               <span className="h-2.5 w-2.5 rounded-full bg-surface-border" />
               <span className="h-2.5 w-2.5 rounded-full bg-surface-border" />
-              <span className="ml-2 font-mono text-xs text-slate-500">botport / restore</span>
+              <span className="ml-2 font-mono text-xs text-slate-500">devorju / restore</span>
             </div>
             <div className="p-4">
               <div className="mb-3 flex items-center justify-between">
@@ -161,13 +161,13 @@ export default function HomePage() {
         {/* Comparison */}
         <section id="compare" className="border-t border-surface-border">
           <div className="section">
-            <div className="eyebrow">Why Botport</div>
+            <div className="eyebrow">Why Devorju</div>
             <h2 className="mt-2.5 max-w-2xl text-3xl font-bold sm:text-4xl">
               Protection without the data harvesting
             </h2>
             <p className="mt-3 max-w-2xl text-slate-400">
               Many “recovery” bots quietly store OAuth tokens and member data so they can add people
-              to other servers. Botport does not - and that difference is the whole point.
+              to other servers. Devorju does not - and that difference is the whole point.
             </p>
             <div className="mt-8 overflow-x-auto rounded-xl border border-surface-border">
               <table className="w-full border-collapse text-sm">
@@ -175,7 +175,7 @@ export default function HomePage() {
                   <tr className="bg-surface-raised text-xs uppercase tracking-wide text-slate-500">
                     <th className="px-4 py-3.5 text-left font-medium">Capability</th>
                     <th className="bg-brand/10 px-4 py-3.5 text-left font-medium text-brand">
-                      Botport
+                      Devorju
                     </th>
                     <th className="px-4 py-3.5 text-left font-medium">Typical member-pulling bot</th>
                   </tr>

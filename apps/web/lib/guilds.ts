@@ -6,7 +6,7 @@ import { env } from './env';
 import { fetchManageableGuilds, guildIconUrl, type DiscordGuildSummary } from './discord';
 
 /**
- * Guilds connected to Botport that the current user owns.
+ * Guilds connected to Devorju that the current user owns.
  *
  * In serverless mode there is no gateway `guildCreate` event, so guild rows
  * may not exist yet even though the bot has already joined. This function
@@ -61,7 +61,7 @@ export async function getConnectedGuilds(userId: string): Promise<Guild[]> {
 }
 
 /**
- * Discord guilds the user can manage that are NOT yet connected to Botport.
+ * Discord guilds the user can manage that are NOT yet connected to Devorju.
  * Requires a stored OAuth access token; returns [] otherwise (e.g. dev login).
  */
 export async function getConnectableGuilds(

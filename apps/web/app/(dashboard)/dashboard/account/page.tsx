@@ -40,7 +40,7 @@ export default async function AccountPage() {
       <div className="card">
         <h2 className="font-semibold">Data &amp; privacy</h2>
         <p className="mt-2 text-sm text-slate-400">
-          Botport stores only what you see here plus your connected servers&apos; configuration and
+          Devorju stores only what you see here plus your connected servers&apos; configuration and
           backups. We never collect members&apos; IP addresses or device data, and we never store
           OAuth tokens to add members to other servers.
         </p>

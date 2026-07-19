@@ -14,9 +14,9 @@ export default async function LoginPage({
     <main className="grid min-h-screen place-items-center px-4">
       <div className="card w-full max-w-md text-center">
         <Link href="/" className="mx-auto grid h-12 w-12 place-items-center rounded-xl bg-brand text-xl font-bold text-white">
-          B
+          D
         </Link>
-        <h1 className="mt-5 text-2xl font-semibold">Welcome to Botport</h1>
+        <h1 className="mt-5 text-2xl font-semibold">Welcome to Devorju</h1>
         <p className="mt-2 text-sm text-slate-400">
           Sign in with Discord to manage your servers, backups and verification.
         </p>
@@ -43,7 +43,7 @@ export default async function LoginPage({
         )}
 
         <p className="mt-6 text-xs text-slate-500">
-          By continuing you agree that Botport stores only the data shown in your dashboard.
+          By continuing you agree that Devorju stores only the data shown in your dashboard.
         </p>
       </div>
     </main>

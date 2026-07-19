@@ -13,7 +13,7 @@ function Shell({ children, color }: { children: React.ReactNode; color?: string 
           className="mx-auto grid h-12 w-12 place-items-center rounded-xl text-xl font-bold text-white"
           style={{ backgroundColor: color || '#5865F2' }}
         >
-          B
+          D
         </div>
         {children}
       </div>

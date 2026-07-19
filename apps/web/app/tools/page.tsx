@@ -3,7 +3,7 @@ import { SiteFooter } from '@/components/site-footer';
 import { IdLookup } from './id-lookup';
 
 export const metadata = {
-  title: 'Tools - Botport',
+  title: 'Tools - Devorju',
   description: 'Free Discord tools, including a Discord ID (snowflake) lookup.',
 };
 

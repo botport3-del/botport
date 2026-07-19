@@ -5,8 +5,8 @@ export const metadata = { title: 'FAQ' };
 
 const faqs = [
   [
-    'Does Botport steal or "pull" members into other servers?',
-    'No. Botport never stores OAuth tokens to add members elsewhere - that violates Discord’s Terms of Service. Recovery only re-creates your own server’s structure.',
+    'Does Devorju steal or "pull" members into other servers?',
+    'No. Devorju never stores OAuth tokens to add members elsewhere - that violates Discord’s Terms of Service. Recovery only re-creates your own server’s structure.',
   ],
   [
     'What member data do you collect?',
@@ -26,7 +26,7 @@ const faqs = [
   ],
   [
     'Do I need to host anything?',
-    'You invite the Botport bot to your server and configure it from the dashboard. Backups run automatically on your chosen schedule.',
+    'You invite the Devorju bot to your server and configure it from the dashboard. Backups run automatically on your chosen schedule.',
   ],
 ];
 

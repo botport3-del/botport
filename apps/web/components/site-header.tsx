@@ -6,9 +6,9 @@ export function SiteHeader() {
       <div className="container-page flex h-16 items-center justify-between">
         <Link href="/" className="flex items-center gap-2 font-semibold">
           <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-brand to-indigo-500 text-white shadow-lg shadow-brand/30">
-            B
+            D
           </span>
-          Botport
+          Devorju
         </Link>
         <nav className="hidden items-center gap-6 text-sm text-slate-300 md:flex">
           <Link href="/features" className="hover:text-white">

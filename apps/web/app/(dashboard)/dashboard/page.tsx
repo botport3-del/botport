@@ -66,7 +66,7 @@ export default async function OverviewPage() {
             </span>
             <p className="mt-4 font-medium">No servers connected yet</p>
             <p className="mt-1 max-w-sm text-sm text-slate-400">
-              Invite the Botport bot to a server you manage to start backing it up and verifying
+              Invite the Devorju bot to a server you manage to start backing it up and verifying
               members.
             </p>
             <Link href="/dashboard/servers" className="btn-primary mt-5">
