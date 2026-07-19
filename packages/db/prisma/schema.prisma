@@ -40,12 +40,13 @@ model Guild {
   connectedAt  DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  settings      GuildSettings?
-  backups       Backup[]
-  verifications Verification[]
-  blacklist     BlacklistEntry[]
-  staff         StaffMember[]
-  auditLogs     AuditLog[]
+  settings           GuildSettings?
+  backups            Backup[]
+  verifications      Verification[]
+  blacklist          BlacklistEntry[]
+  staff              StaffMember[]
+  auditLogs          AuditLog[]
+  transferBatches    TransferBatch[]
 
   @@index([ownerUserId])
 }
@@ -105,16 +106,18 @@ enum BackupType {
 
 /// A verification attempt/record. Only consent-based fields are stored.
 model Verification {
-  id           String             @id @default(cuid())
-  guildId      String
-  guild        Guild              @relation(fields: [guildId], references: [id], onDelete: Cascade)
-  discordId    String
-  username     String?
-  status       VerificationStatus @default(PENDING)
-  method       String             @default("captcha") // "captcha" | "oauth"
-  consentGiven Boolean            @default(false)
-  createdAt    DateTime           @default(now())
-  completedAt  DateTime?
+  id            String             @id @default(cuid())
+  guildId       String
+  guild         Guild              @relation(fields: [guildId], references: [id], onDelete: Cascade)
+  discordId     String
+  username      String?
+  status        VerificationStatus @default(PENDING)
+  method        String             @default("captcha") // "captcha" | "oauth"
+  consentGiven  Boolean            @default(false)
+  /// Snapshot of the member's roles at last known state — used to restore roles on rejoin.
+  memberRoleIds String[]           @default([])
+  createdAt     DateTime           @default(now())
+  completedAt   DateTime?
 
   @@index([guildId, discordId])
 }
@@ -173,4 +176,51 @@ model AuditLog {
   createdAt DateTime @default(now())
 
   @@index([guildId, createdAt])
+}
+
+/// A "server transfer" batch: send DM invites to gathered members so they can
+/// move to a new server. Uses only official Discord APIs — no covert pulling.
+model TransferBatch {
+  id             String   @id @default(cuid())
+  guildId        String
+  guild          Guild    @relation(fields: [guildId], references: [id], onDelete: Cascade)
+  /// Destination guild ID members are being invited to.
+  targetGuildId  String
+  /// The Discord invite URL sent in the DM.
+  inviteUrl      String
+  /// Optional custom message shown to members inside the DM.
+  message        String?
+  createdBy      String?
+  createdAt      DateTime @default(now())
+
+  invitations    TransferInvitation[]
+
+  @@index([guildId, createdAt])
+}
+
+/// One invitation attempt to one member as part of a transfer batch.
+model TransferInvitation {
+  id            String                   @id @default(cuid())
+  batchId       String
+  batch         TransferBatch            @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  discordId     String
+  username      String?
+  status        TransferInvitationStatus @default(PENDING)
+  attempts      Int                      @default(0)
+  lastError     String?
+  sentAt        DateTime?
+  joinedAt      DateTime?
+  createdAt     DateTime                 @default(now())
+  updatedAt     DateTime                 @updatedAt
+
+  @@index([batchId, status])
+  @@unique([batchId, discordId])
+}
+
+enum TransferInvitationStatus {
+  PENDING
+  SENT
+  DMS_DISABLED
+  FAILED
+  JOINED
 }
