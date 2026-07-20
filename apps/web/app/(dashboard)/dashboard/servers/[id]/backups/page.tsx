@@ -3,7 +3,7 @@ import { requireUser } from '@/lib/auth';
 import { requireGuildAccess } from '@/lib/guild-access';
 import { summarizeSnapshot } from '@/lib/backups';
 import { env } from '@/lib/env';
-import { BackupsPanel, type BackupView } from './backups-panel';
+import { BackupsPanel, type BackupView, type TargetOption } from './backups-panel';
 
 export const dynamic = 'force-dynamic';
 
@@ -30,12 +30,25 @@ export default async function BackupsPage({ params }: { params: Promise<{ id: st
     };
   });
 
+  // All guilds the current user owns — these are the possible restore targets.
+  const ownedGuilds = await prisma.guild.findMany({
+    where: { ownerUserId: user.id },
+    orderBy: { connectedAt: 'desc' },
+  });
+  const targets: TargetOption[] = ownedGuilds.map((g) => ({
+    discordId: g.discordId,
+    name: g.name,
+    isCurrent: g.id === guild.id,
+  }));
+
   return (
     <BackupsPanel
       guildId={guild.id}
       backups={views}
       botConfigured={Boolean(env.discordBotToken)}
       schedule={guild.settings?.backupSchedule ?? 'DAILY'}
+      currentDiscordId={guild.discordId}
+      targets={targets}
     />
   );
 }

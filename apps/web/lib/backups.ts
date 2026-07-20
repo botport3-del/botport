@@ -50,8 +50,12 @@ export async function createGuildBackup(
   });
 }
 
-/** Restores a stored backup back onto its guild. */
-export async function restoreGuildBackup(backupId: string) {
+/**
+ * Restores a stored backup. By default restores back onto the guild the
+ * backup was taken from; pass `targetDiscordGuildId` to restore onto a
+ * different Discord server the bot is a member of.
+ */
+export async function restoreGuildBackup(backupId: string, targetDiscordGuildId?: string) {
   const backup = await prisma.backup.findUnique({
     where: { id: backupId },
     include: { guild: true },
@@ -59,5 +63,6 @@ export async function restoreGuildBackup(backupId: string) {
   if (!backup) throw new BackupError('Backup not found.');
 
   const rest = createRest(requireBotToken());
-  return restoreSnapshot(rest, backup.guild.discordId, backup.data as unknown as GuildSnapshot);
+  const guildId = targetDiscordGuildId ?? backup.guild.discordId;
+  return restoreSnapshot(rest, guildId, backup.data as unknown as GuildSnapshot);
 }

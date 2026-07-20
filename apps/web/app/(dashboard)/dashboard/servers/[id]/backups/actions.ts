@@ -31,18 +31,25 @@ export async function restoreBackupAction(
   guildId: string,
   backupId: string,
   _prev: ActionState,
-  _formData: FormData,
+  formData: FormData,
 ): Promise<ActionState> {
   const user = await requireUser();
   await requireGuildAccess(user.id, guildId);
   const backup = await prisma.backup.findFirst({ where: { id: backupId, guildId } });
   if (!backup) return { error: 'Backup not found.' };
+
+  const targetDiscordGuildId = ((formData.get('targetGuildId') as string) || '').trim();
+  if (targetDiscordGuildId && !/^\d{15,20}$/.test(targetDiscordGuildId)) {
+    return { error: 'Invalid target server ID.' };
+  }
+
   try {
-    const result = await restoreGuildBackup(backupId);
+    const result = await restoreGuildBackup(backupId, targetDiscordGuildId || undefined);
     revalidatePath(`/dashboard/servers/${guildId}/backups`);
     const warn = result.warnings.length ? ` (${result.warnings.length} warning(s))` : '';
+    const dest = targetDiscordGuildId ? ` on server ${targetDiscordGuildId}` : '';
     return {
-      ok: `Restored ${result.rolesCreated} role(s) and ${result.channelsCreated} channel(s)${warn}.`,
+      ok: `Restored ${result.rolesCreated} role(s) and ${result.channelsCreated} channel(s)${dest}${warn}.`,
     };
   } catch (e) {
     return { error: e instanceof BackupError ? e.message : 'Failed to restore backup.' };
