@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="45%" r="70%">
+      <stop offset="0" stop-color="#1b2130"/>
+      <stop offset="1" stop-color="#0b0d12"/>
+    </radialGradient>
+    <linearGradient id="sweep" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f5c542" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#f5c542" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect x="32" y="32" width="960" height="960" rx="220" fill="url(#bg)"/>
+  <g fill="none" stroke="#9146ff" stroke-width="22" opacity="0.9">
+    <circle cx="512" cy="512" r="340"/>
+    <circle cx="512" cy="512" r="230" opacity="0.7"/>
+    <circle cx="512" cy="512" r="120" opacity="0.55"/>
+  </g>
+  <path d="M512 512 L512 172 A340 340 0 0 1 852 512 Z" fill="url(#sweep)"/>
+  <line x1="512" y1="512" x2="512" y2="172" stroke="#f5c542" stroke-width="22" stroke-linecap="round"/>
+  <circle cx="680" cy="330" r="46" fill="#f5c542"/>
+  <circle cx="380" cy="650" r="34" fill="#3ddc84"/>
+  <circle cx="660" cy="680" r="30" fill="#4aa8ff"/>
+  <circle cx="512" cy="512" r="36" fill="#ffffff"/>
+</svg>

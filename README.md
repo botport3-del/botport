@@ -24,6 +24,7 @@ Monorepo (pnpm workspaces):
 ```
 apps/web    Next.js dashboard, verify pages, API routes, marketing
 apps/bot    discord.js worker — slash commands, events, backup scheduler
+apps/cod-pro-radar  Standalone Windows desktop app (Tauri) — Twitch live radar for COD pros, see its README
 packages/db Prisma schema + shared client
 ```
 

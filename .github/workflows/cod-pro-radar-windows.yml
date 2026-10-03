@@ -1,0 +1,61 @@
+name: COD Pro Radar (Windows)
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "apps/cod-pro-radar/**"
+      - ".github/workflows/cod-pro-radar-windows.yml"
+  pull_request:
+    paths:
+      - "apps/cod-pro-radar/**"
+      - ".github/workflows/cod-pro-radar-windows.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: apps/cod-pro-radar
+    env:
+      # Optional repository variable: bakes a default Twitch Client-ID into the build.
+      COD_RADAR_TWITCH_CLIENT_ID: ${{ vars.COD_RADAR_TWITCH_CLIENT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: apps/cod-pro-radar/src-tauri -> target
+
+      - name: Install frontend dependencies
+        run: pnpm install --frozen-lockfile --filter cod-pro-radar --ignore-scripts
+
+      - name: Typecheck & build frontend
+        run: pnpm build
+
+      - name: Rust tests
+        working-directory: apps/cod-pro-radar/src-tauri
+        run: cargo test --locked
+
+      - name: Build installer
+        run: pnpm tauri build
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cod-pro-radar-windows
+          path: |
+            apps/cod-pro-radar/src-tauri/target/release/bundle/nsis/*.exe
+            apps/cod-pro-radar/src-tauri/target/release/bundle/msi/*.msi
+          if-no-files-found: error
